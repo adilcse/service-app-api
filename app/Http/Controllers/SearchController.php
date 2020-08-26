@@ -20,12 +20,7 @@ class SearchController extends Controller
     {
         if ($request->q) {
             $keyword=$request->q;
-            $data= Serviceman::select('name', 'id', 'c_id', 'image', 'price')->where('name', 'like', '%'.$keyword.'%')
-            ->orWhereHas(
-                'catagory', function ($q) use ($keyword) {
-                    return $q->where('name', 'like', '%'. $keyword . '%');
-                }
-            )->get();
+            $data= Serviceman::select('*')->where('name', 'like', '%'.$keyword.'%')->limit(10)->get();
             return $this->_checkData($data);
         }  else {
             return $this->_checkData(null);
