@@ -11,12 +11,15 @@
 |
 */
 $router->group(
-    ['prefix' => 'apis'], function () use ($router) {
+    ['prefix' => 'apis','middleware'=>'auth'], function () use ($router) {
         $router->get(
             '/catagory', 'CatagoriesController@get'
         );
         $router->get(
             '/serviceman', 'ServicemanController@get'
+        );
+        $router->post(
+            '/serviceman', 'ServicemanController@add'
         );
         $router->get(
             '/slider', 'SliderController@get'

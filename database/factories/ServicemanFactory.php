@@ -84,7 +84,7 @@ $factory->define(
         'name' => $faker->name,
         'description' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
         'image'=>$faker->imageUrl,
-        'status'=>$faker->randomDigit,
+        'status'=>1,
         'mobile'=>$faker->e164PhoneNumber,
         'email'=>$faker->email,
         'latitude'=>$location[0],

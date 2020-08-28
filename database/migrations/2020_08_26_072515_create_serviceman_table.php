@@ -19,8 +19,8 @@ class CreateServicemanTable extends Migration
                 $table->foreignId('c_id');
                 $table->string('name', 200);
                 $table->string('mobile', 20);
-                $table->longText('description');
-                $table->string("email", 100);
+                $table->longText('description')->nullable();
+                $table->string("email", 100)->nullable();
                 $table->integer('price');
                 $table->double('latitude');
                 $table->double('longitude');
