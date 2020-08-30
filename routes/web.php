@@ -18,6 +18,9 @@ $router->group(
         $router->get(
             '/serviceman', 'ServicemanController@get'
         );
+        $router->get(
+            '/serviceman/status', 'ServicemanController@status'
+        );
         $router->post(
             '/serviceman', 'ServicemanController@add'
         );
@@ -26,6 +29,11 @@ $router->group(
         );
         $router->get(
             '/search', 'SearchController@search'
+        );
+        $router->get(
+            '/{*}', function () use ($router) {
+                return  response(["message"=>'invalid url'], 404);
+            }
         );
     
     }
@@ -36,7 +44,7 @@ $router->get(
     }
 );
 $router->get(
-    '/', function () use ($router) {
-        return 'welcome to service app';
+    '/{*}', function () use ($router) {
+        return  response(["message"=>'invalid url'], 404);
     }
 );

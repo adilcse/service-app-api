@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Modal\Serviceman;
 use App\Modal\Catagory;
+use App\Helper\CheckData;
+
 class SearchController extends Controller
 {
     /**
@@ -21,8 +23,8 @@ class SearchController extends Controller
         if ($request->q) {
             $keyword=$request->q;
             $data= Serviceman::select('*')->where('name', 'like', '%'.$keyword.'%')->limit(10)->get();
-            return $this->_checkData($data);
-        }  else {
+            return CheckData::check($data, true);
+        } else {
             return $this->_checkData(null);
         }
     }

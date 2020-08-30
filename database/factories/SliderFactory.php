@@ -4,7 +4,7 @@
  * @var \Illuminate\Database\Eloquent\Factory $factory 
  */
 
-use App\Modal\Catagory;
+use App\Modal\Slider;
 use Faker\Generator as Faker;
 
 /*
@@ -19,12 +19,11 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(
-    Catagory::class, function (Faker $faker) {
+    Slider::class, function (Faker $faker) {
         return [
-        'name' => $faker->name,
-        'description' => $faker->email,
-        'image'=>$faker->imageUrl,
-        'status'=>"1"
+        'head' => $faker->name,
+        'para' => $faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+        'image'=>$faker->imageUrl($width = 640, $height = 480),
         ];
     }
 );

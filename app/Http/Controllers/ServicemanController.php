@@ -24,7 +24,7 @@ class ServicemanController extends Controller
                 $data=Serviceman::getByLocation($lat, $lng, $radius);
             }
             
-            return CheckData::check($data);
+            return CheckData::check($data, true);
 
         } else if ($request->id) {
             $data = Serviceman::find($request->id);
@@ -32,27 +32,57 @@ class ServicemanController extends Controller
                 if($data->status ==1) {
                     return CheckData::check($data);
                 }
-                return CheckData::check(null, "unverified user");    
+                return CheckData::check(null, null, "unverified user");    
             } 
             return CheckData::check($data);  
         } else if($request->catagory) {
             $data = Catagory::find($request->catagory);
-            return $this->_checkData($data->serviceman);
+            return CheckData::check(
+                $data->serviceman()->where('status', "1")->get(),
+                true
+            );
         }
-            return $this->_checkData(null);
+            return CheckData::check(null);
     }
 
-    private function _checkData($data)
+    public function status(Request $request)
     {
-        if($data) {
-            return ['status'=>'success','data'=>$data];
-        } else {
-            return ['status'=>'failed','message'=>'request not found'];
+        $this->validate(
+            $request,
+            [
+            'id'=>'exists:serviceman',
+            'mobile'=>'string'
+            ]
+        );
+        $serviceman=Serviceman::find($request->id);
+        if($serviceman->mobile == $request->mobile) {
+            return \response(
+                [
+                      'status'=>'success',
+                      'data'=>[
+                        'id'=>$serviceman->id,
+                        'catagory'=>$serviceman->catagory->name,
+                        'name'=>$serviceman->name,
+                        'mobile'=>$serviceman->mobile,
+                        'status'=>$serviceman->status,
+                        'registered_at'=>$serviceman->created_at,
+                        'updated_at'=>$serviceman->updated_at]
+                    ],
+                200
+            );
         }
+        return \response(
+            ['status'=>'failed','message'=>"mobile number does not matched",
+            ], 
+            403
+        );
+      
     }
+
 
     public function add(Request $request)
     {
+         
         $this->validate(
             $request, [
             'name'=>'string|required|max:255',
@@ -93,9 +123,9 @@ class ServicemanController extends Controller
         try{
             $serviceman->save();
         }catch(Exeption $e){
-            return \response(['message'=>'unable to save your adata'], 422);
+            return \response(['message'=>'unable to save your data'], 422);
         }
-        return ['status'=>'success','message'=>'waiting for conformation your tracking number is '.$serviceman->id];
+        return response(['status'=>'success','message'=>'waiting for conformation, your tracking number is ',"id"=>$serviceman->id], 200);
 
     }
 }

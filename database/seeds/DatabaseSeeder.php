@@ -11,7 +11,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CatagorySeeder::class);
-        $this->call(ApiKeySeeder::class);
+        // $this->call(CatagorySeeder::class);
+        // $this->call(ApiKeySeeder::class);
+        $this->call(SliderSeeder::class);
     }
 }

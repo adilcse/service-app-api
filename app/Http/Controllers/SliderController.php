@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modal\Slider;
+use App\Helper\CheckData;
 class SliderController extends Controller
 {
     /**
@@ -18,13 +19,13 @@ class SliderController extends Controller
     public function get(Request $request)
     {
         if ($request->view=='all') {
-            $cats= Slider::all();
-            return $this->_checkData($cats);
+            $cats= Slider::limit(5)->get();
+            return CheckData::check($cats, true);
         } else if ($request->id) {
             $cat = Slider::find($request->id);
-            return $this->_checkData($cat);
+            return CheckData::check($cat, false);
         } else {
-            return $this->_checkData(null);
+            return  CheckData::check(null);
         }
     }
 

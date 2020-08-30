@@ -35,7 +35,7 @@ class Serviceman extends Model
                     return true;
                 }
             }
-        )
+        )->where("status", 1)
            ->having("distance", "<", $radius)
            ->orderBy("distance", 'asc')->get();
             return $data;
