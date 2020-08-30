@@ -44,7 +44,7 @@ $router->get(
     }
 );
 $router->get(
-    '/{*}', function () use ($router) {
+    '/', function () use ($router) {
         return  response(["message"=>'invalid url'], 404);
     }
 );
