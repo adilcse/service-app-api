@@ -22,7 +22,10 @@ class SearchController extends Controller
     {
         if ($request->q) {
             $keyword=$request->q;
-            $data= Serviceman::select('*')->where('name', 'like', '%'.$keyword.'%')->limit(10)->get();
+            $data= Serviceman::select('*')->where('name', 'like', '%'.$keyword.'%')
+                ->where('status', 1)
+                ->limit(10)
+                ->get();
             return CheckData::check($data, true);
         } else {
             return $this->_checkData(null);
