@@ -16,7 +16,7 @@ class ServicemanController extends Controller
         } else if ('location'===$request->view) {
             $lat=$request->lat;
             $lng=$request->lng;
-            $radius=$request->radius??100;
+            $radius=$request->radius??$_ENV['RADIUS'];
             $data=[];
             if($request->cid) {
                 $data=Serviceman::getByLocation($lat, $lng, $radius, $request->cid);
