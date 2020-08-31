@@ -110,7 +110,7 @@ class ServicemanController extends Controller
             };
         }
         $serviceman->name=$request->name;
-        $serviceman->status=0;
+        $serviceman->status=1; // change this to 0 in production
         $serviceman->image=$imagePath;
         $serviceman->c_id=$request->c_id;
         $serviceman->mobile=$request->mobile;
