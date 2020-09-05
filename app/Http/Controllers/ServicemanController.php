@@ -106,11 +106,11 @@ class ServicemanController extends Controller
             $imageName=$request->name."_".time().".".$file_ext;
             $destinationPath='./upload/serviceman/';
             if($request->file('image')->move($destinationPath, $imageName)) {
-                $imagePath='/upload/serviceman/' . $imageName;
+                $imagePath=$_ENV['APP_URL'].'/upload/serviceman/' . $imageName;
             };
         }
         $serviceman->name=$request->name;
-        $serviceman->status=1; // change this to 0 in production
+        $serviceman->status=0; // change this to 0 in production
         $serviceman->image=$imagePath;
         $serviceman->c_id=$request->c_id;
         $serviceman->mobile=$request->mobile;
