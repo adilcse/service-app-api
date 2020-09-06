@@ -37,7 +37,7 @@ class CatagoriesController extends Controller
     {
         if ($request->view=='all') {
             $cats= Catagory::all();
-            return $this->_checkData($cats);
+            return CheckData::check($cats, true);
         } elseif ($request->id) {
             $cat = Catagory::find($request->id);
             return CheckData::check($cat);
