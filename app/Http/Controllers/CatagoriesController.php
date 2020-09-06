@@ -1,39 +1,49 @@
 <?php
-
+/**
+ * Handel catagory related requests
+ * 
+ * PHP version: 7.0
+ * 
+ * @category Controller
+ * @package  Http/Controllers
+ * @author   Adil Hussain <adil.cs.work@gmail.com>
+ * @license  https://opensource.org/licenses/PHP-3.0 statdard
+ * @link     https://github.com/adilcse/service-app-api/blob/master/app/Http/Controllers/CatagoriesController.php
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modal\Catagory;
+use App\Helper\CheckData;
+/**
+ * Check Catagories
+ * 
+ * @category ExtraClass
+ * @package  Helper
+ * @author   Adil Hussain <adil.cs.work@gmail.com>
+ * @license  https://opensource.org/licenses/PHP-3.0 statdard
+ * @link     https://github.com/adilcse/service-app-api/blob/master/app/Http/Controllers/CatagoriesController.php
+ */
 class CatagoriesController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Handle get catagories request
+     *
+     * @param Request $request http request
      *
      * @return void
      */
-    public function __construct()
-    {
-        
-    }
     public function get(Request $request)
     {
         if ($request->view=='all') {
             $cats= Catagory::all();
             return $this->_checkData($cats);
-        } else if ($request->id) {
+        } elseif ($request->id) {
             $cat = Catagory::find($request->id);
-            return $this->_checkData($cat);
+            return CheckData::check($cat);
         } else {
-            return $this->_checkData(null);
-        }
-    }
-
-    private function _checkData($data)
-    {
-        if($data) {
-            return ['status'=>'success','data'=>$data];
-        } else {
-            return ['status'=>'failed','message'=>'request not found'];
+            return CheckData::check($cat);
         }
     }
 }
+

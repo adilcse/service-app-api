@@ -1,23 +1,40 @@
 <?php
-
+/**
+ * Handel Search related requests
+ * 
+ * PHP version: 7.0
+ * 
+ * @category Controller
+ * @package  Http/Controllers
+ * @author   Adil Hussain <adil.cs.work@gmail.com>
+ * @license  https://opensource.org/licenses/PHP-3.0 statdard
+ * @link     https://github.com/adilcse/service-app-api/blob/master/app/Http/Controllers/SearchController.php
+ */
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Modal\Serviceman;
 use App\Modal\Catagory;
 use App\Helper\CheckData;
-
+/**
+ * Search related functions
+ * 
+ * @category Controller
+ * @package  Http/Controllers
+ * @author   Adil Hussain <adil.cs.work@gmail.com>
+ * @license  https://opensource.org/licenses/PHP-3.0 statdard
+ * @link     https://github.com/adilcse/service-app-api/blob/master/app/Http/Controllers/SearchController.php
+ */
 class SearchController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Search request as query
+     * Search in database for specified serach query and resturn with found result
      *
-     * @return void
+     * @param Request $request http request
+     * 
+     * @return response results
      */
-    public function __construct()
-    {
-        
-    }
     public function search(Request $request)
     {
         if ($request->q) {
@@ -28,16 +45,7 @@ class SearchController extends Controller
                 ->get();
             return CheckData::check($data, true);
         } else {
-            return $this->_checkData(null);
-        }
-    }
-
-    private function _checkData($data)
-    {
-        if($data) {
-            return ['status'=>'success','data'=>$data];
-        } else {
-            return ['status'=>'failed','message'=>'request not found'];
+            return CheckData::check(null);
         }
     }
 }
